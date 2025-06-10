@@ -136,37 +136,54 @@
 		position: absolute;
 		left: 0;
 		top: 0;
-		min-width: 180px;
-		background-color: white;
-		border: 1px solid #ccc;
+		min-width: var(--tagarea-dropdown-min-width, 180px);
+		background-color: var(--tagarea-dropdown-background-color, #fff);
+		border: 1px solid var(--tagarea-dropdown-border-color, #ccc);
 		border-radius: 4px;
 		z-index: 1000;
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-		padding: 0;
+		box-shadow: var(
+			--tagarea-dropdown-box-shadow,
+			0 2px 8px rgba(0, 0, 0, 0.08)
+		);
+		padding: var(--tagarea-dropdown-padding, 0);
 		margin: 0;
 		list-style: none;
-		max-height: 250px;
+		max-height: var(--tagarea-dropdown-max-height, 250px);
 		overflow-y: auto;
+		font-family: var(--tagarea-dropdown-font-family, sans-serif);
+		font-size: var(--tagarea-dropdown-font-size, 1rem);
+		color: var(--tagarea-dropdown-color, #000);
 	}
 	.tag-dropdown li {
-		padding: 8px;
+		padding: var(--tagarea-dropdown-option-padding, 8px);
 		cursor: pointer;
 		transition: background-color 0.3s;
 	}
 	.tag-dropdown .tag-option {
-		background-color: #fff;
+		background-color: var(--tagarea-dropdown-option-background-color, #fff);
+		color: var(--tagarea-dropdown-option-color, inherit);
 	}
-	.tag-dropdown .tag-option:hover,
+	.tag-dropdown .tag-option:hover {
+		background-color: var(
+			--tagarea-dropdown-option-hover-background-color,
+			#f0f4ff
+		);
+		color: var(--tagarea-dropdown-option-hover-color, inherit);
+	}
 	.tag-dropdown .tag-option.selected {
-		background-color: #f0f4ff;
+		background-color: var(
+			--tagarea-dropdown-option-selected-background-color,
+			#e0e8ff
+		);
+		color: var(--tagarea-dropdown-option-selected-color, inherit);
 	}
 	.tag-dropdown .tag-option-loading {
-		color: #888;
+		color: var(--tagarea-dropdown-option-loading-color, #888);
 	}
 	.tag-dropdown .tag-option-error {
-		color: #c00;
+		color: var(--tagarea-dropdown-option-error-color, #c00);
 	}
 	.tag-dropdown .tag-option-empty {
-		color: #888;
+		color: var(--tagarea-dropdown-option-empty-color, #888);
 	}
 </style>

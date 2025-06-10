@@ -2127,6 +2127,38 @@ function without_reactive_context(fn) {
 // node_modules/svelte/src/internal/client/dom/elements/events.js
 var all_registered_events = /* @__PURE__ */ new Set();
 var root_event_handles = /* @__PURE__ */ new Set();
+function create_event(event_name, dom, handler, options = {}) {
+  function target_handler(event2) {
+    if (!options.capture) {
+      handle_event_propagation.call(dom, event2);
+    }
+    if (!event2.cancelBubble) {
+      return without_reactive_context(() => {
+        return handler?.call(this, event2);
+      });
+    }
+  }
+  if (event_name.startsWith("pointer") || event_name.startsWith("touch") || event_name === "wheel") {
+    queue_micro_task(() => {
+      dom.addEventListener(event_name, target_handler, options);
+    });
+  } else {
+    dom.addEventListener(event_name, target_handler, options);
+  }
+  return target_handler;
+}
+function event(event_name, dom, handler, capture, passive2) {
+  var options = { capture, passive: passive2 };
+  var target_handler = create_event(event_name, dom, handler, options);
+  if (dom === document.body || // @ts-ignore
+  dom === window || // @ts-ignore
+  dom === document || // Firefox has quirky behavior, it can happen that we still get "canplay" events when the element is already removed
+  dom instanceof HTMLMediaElement) {
+    teardown(() => {
+      dom.removeEventListener(event_name, target_handler, options);
+    });
+  }
+}
 function delegate(events) {
   for (var i = 0; i < events.length; i++) {
     all_registered_events.add(events[i]);
@@ -4550,7 +4582,22 @@ var root_1 = from_html(`<!><span></span><!>`, 1);
 var root = from_html(`<div><!></div>`);
 function Mirror($$anchor, $$props) {
   push($$props, true);
-  let markerRect = prop($$props, "markerRect", 15), formatTag = prop($$props, "formatTag", 3, (tag) => `<span style="text-decoration:underline;">${tag}</span>`);
+  let markerRect = prop($$props, "markerRect", 15), formatTag = prop($$props, "formatTag", 3, (tag) => `<span style="${[
+    "color:var(--tagarea-tag-color, inherit)",
+    "background-color:var(--tagarea-tag-background-color, inherit)",
+    "font-weight:var(--tagarea-tag-font-weight, inherit)",
+    "font-style:var(--tagarea-tag-font-style, inherit)",
+    "font-size:var(--tagarea-tag-font-size, inherit)",
+    "font-family:var(--tagarea-tag-font-family, inherit)",
+    "text-transform:var(--tagarea-tag-text-transform, inherit)",
+    "text-align:var(--tagarea-tag-text-align, inherit)",
+    "text-decoration-line:var(--tagarea-tag-text-decoration-line, underline)",
+    "text-decoration-color:var(--tagarea-tag-text-decoration-color, inherit)",
+    "text-decoration-style:var(--tagarea-tag-text-decoration-style, inherit)",
+    "text-decoration-thickness:var(--tagarea-tag-text-decoration-thickness, inherit)",
+    "border:var(--tagarea-tag-border, inherit)",
+    "border-radius:var(--tagarea-tag-border-radius, 0)"
+  ].join(";")};">${tag}</span>`);
   let markerEl = state(null);
   user_effect(() => {
     if (get(markerEl) && $$props.currentWord) {
@@ -4607,6 +4654,7 @@ function Mirror($$anchor, $$props) {
     return text2;
   }
   var div = root();
+  event("resize", $window, updatePosition);
   var node = child(div);
   {
     var consequent = ($$anchor2) => {
@@ -4771,9 +4819,9 @@ var fromCharCode = String.fromCharCode;
 var outOfBoundsChar = fromCharCode(65533);
 
 // src/TagDropdown.svelte
-var root_2 = from_html(`<li class="tag-option-loading svelte-1mc63ou">Loading\u2026</li>`);
-var root_4 = from_html(`<li class="tag-option-error svelte-1mc63ou"> </li>`);
-var root_6 = from_html(`<li class="tag-option-empty svelte-1mc63ou">No results</li>`);
+var root_2 = from_html(`<li class="tag-option-loading svelte-nenf6b">Loading\u2026</li>`);
+var root_4 = from_html(`<li class="tag-option-error svelte-nenf6b"> </li>`);
+var root_6 = from_html(`<li class="tag-option-empty svelte-nenf6b">No results</li>`);
 var on_mousedown = (e, selectOption, option) => {
   e.preventDefault();
   selectOption(get(option));
@@ -4783,10 +4831,10 @@ var on_touchstart = (e, selectOption, option) => {
   selectOption(get(option));
 };
 var root_8 = from_html(`<li role="option" tabindex="-1"><!></li>`);
-var root_12 = from_html(`<ul class="tag-dropdown svelte-1mc63ou" role="listbox" aria-label="tag suggestions" tabindex="0"><!></ul>`);
+var root_12 = from_html(`<ul class="tag-dropdown svelte-nenf6b" role="listbox" aria-label="tag suggestions" tabindex="0"><!></ul>`);
 var $$css = {
-  hash: "svelte-1mc63ou",
-  code: ".tag-dropdown.svelte-1mc63ou {position:absolute;left:0;top:0;min-width:180px;background-color:white;border:1px solid #ccc;border-radius:4px;z-index:1000;box-shadow:0 2px 8px rgba(0, 0, 0, 0.08);padding:0;margin:0;list-style:none;max-height:250px;overflow-y:auto;}.tag-dropdown.svelte-1mc63ou li:where(.svelte-1mc63ou) {padding:8px;cursor:pointer;transition:background-color 0.3s;}.tag-dropdown.svelte-1mc63ou .tag-option:where(.svelte-1mc63ou) {background-color:#fff;}.tag-dropdown.svelte-1mc63ou .tag-option:where(.svelte-1mc63ou):hover,\r\n	.tag-dropdown.svelte-1mc63ou .tag-option.selected:where(.svelte-1mc63ou) {background-color:#f0f4ff;}.tag-dropdown.svelte-1mc63ou .tag-option-loading:where(.svelte-1mc63ou) {color:#888;}.tag-dropdown.svelte-1mc63ou .tag-option-error:where(.svelte-1mc63ou) {color:#c00;}.tag-dropdown.svelte-1mc63ou .tag-option-empty:where(.svelte-1mc63ou) {color:#888;}"
+  hash: "svelte-nenf6b",
+  code: ".tag-dropdown.svelte-nenf6b {position:absolute;left:0;top:0;min-width:var(--tagarea-dropdown-min-width, 180px);background-color:var(--tagarea-dropdown-background-color, #fff);border:1px solid var(--tagarea-dropdown-border-color, #ccc);border-radius:4px;z-index:1000;box-shadow:var(\r\n			--tagarea-dropdown-box-shadow,\r\n			0 2px 8px rgba(0, 0, 0, 0.08)\r\n		);padding:var(--tagarea-dropdown-padding, 0);margin:0;list-style:none;max-height:var(--tagarea-dropdown-max-height, 250px);overflow-y:auto;font-family:var(--tagarea-dropdown-font-family, sans-serif);font-size:var(--tagarea-dropdown-font-size, 1rem);color:var(--tagarea-dropdown-color, #000);}.tag-dropdown.svelte-nenf6b li:where(.svelte-nenf6b) {padding:var(--tagarea-dropdown-option-padding, 8px);cursor:pointer;transition:background-color 0.3s;}.tag-dropdown.svelte-nenf6b .tag-option:where(.svelte-nenf6b) {background-color:var(--tagarea-dropdown-option-background-color, #fff);color:var(--tagarea-dropdown-option-color, inherit);}.tag-dropdown.svelte-nenf6b .tag-option:where(.svelte-nenf6b):hover {background-color:var(\r\n			--tagarea-dropdown-option-hover-background-color,\r\n			#f0f4ff\r\n		);color:var(--tagarea-dropdown-option-hover-color, inherit);}.tag-dropdown.svelte-nenf6b .tag-option.selected:where(.svelte-nenf6b) {background-color:var(\r\n			--tagarea-dropdown-option-selected-background-color,\r\n			#e0e8ff\r\n		);color:var(--tagarea-dropdown-option-selected-color, inherit);}.tag-dropdown.svelte-nenf6b .tag-option-loading:where(.svelte-nenf6b) {color:var(--tagarea-dropdown-option-loading-color, #888);}.tag-dropdown.svelte-nenf6b .tag-option-error:where(.svelte-nenf6b) {color:var(--tagarea-dropdown-option-error-color, #c00);}.tag-dropdown.svelte-nenf6b .tag-option-empty:where(.svelte-nenf6b) {color:var(--tagarea-dropdown-option-empty-color, #888);}"
 };
 function TagDropdown($$anchor, $$props) {
   push($$props, true);
@@ -4891,7 +4939,7 @@ function TagDropdown($$anchor, $$props) {
                     reset(li_3);
                     template_effect(
                       ($0) => {
-                        classes = set_class(li_3, 1, "tag-option svelte-1mc63ou", null, classes, $0);
+                        classes = set_class(li_3, 1, "tag-option svelte-nenf6b", null, classes, $0);
                         set_attribute2(li_3, "id", `${baseId}-tag-option-${i}`);
                         set_attribute2(li_3, "aria-selected", get(dropdownActiveIndex) === i);
                       },

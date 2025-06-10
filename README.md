@@ -100,6 +100,57 @@ To use the library directly in a browser, include the `iife` build in your HTML.
 </html>
 ```
 
+## Styling
+
+The appearance of the tags and the dropdown menu can be customized using CSS variables. You can set these variables in your own stylesheet to override the default styles.
+
+### Tag Styling
+
+These variables control the appearance of the tags that are rendered in the mirrored element.
+
+| Variable                                  | Default     | Description                               |
+| ----------------------------------------- | ----------- | ----------------------------------------- |
+| `--tagarea-tag-color`                     | `inherit`   | The text color of the tag.                |
+| `--tagarea-tag-background-color`          | `inherit`   | The background color of the tag.          |
+| `--tagarea-tag-font-weight`               | `inherit`   | The font weight of the tag.               |
+| `--tagarea-tag-font-style`                | `inherit`   | The font style of the tag.                |
+| `--tagarea-tag-font-size`                 | `inherit`   | The font size of the tag.                 |
+| `--tagarea-tag-font-family`               | `inherit`   | The font family of the tag.               |
+| `--tagarea-tag-text-transform`            | `inherit`   | The text transform of the tag.            |
+| `--tagarea-tag-text-align`                | `inherit`   | The text align of the tag.                |
+| `--tagarea-tag-text-decoration-line`      | `underline` | The text decoration line of the tag.      |
+| `--tagarea-tag-text-decoration-color`     | `inherit`   | The text decoration color of the tag.     |
+| `--tagarea-tag-text-decoration-style`     | `inherit`   | The text decoration style of the tag.     |
+| `--tagarea-tag-text-decoration-thickness` | `inherit`   | The text decoration thickness of the tag. |
+| `--tagarea-tag-border`                    | `inherit`   | The border of the tag.                    |
+| `--tagarea-tag-border-radius`             | `0`         | The border radius of the tag.             |
+
+### Dropdown Styling
+
+These variables control the appearance of the dropdown menu and its options.
+
+| Variable                                              | Default                         | Description                                   |
+| ----------------------------------------------------- | ------------------------------- | --------------------------------------------- |
+| `--tagarea-dropdown-min-width`                        | `180px`                         | The minimum width of the dropdown.            |
+| `--tagarea-dropdown-background-color`                 | `#fff`                          | The background color of the dropdown.         |
+| `--tagarea-dropdown-border-color`                     | `#ccc`                          | The border color of the dropdown.             |
+| `--tagarea-dropdown-box-shadow`                       | `0 2px 8px rgba(0, 0, 0, 0.08)` | The box shadow of the dropdown.               |
+| `--tagarea-dropdown-padding`                          | `0`                             | The padding of the dropdown.                  |
+| `--tagarea-dropdown-max-height`                       | `250px`                         | The maximum height of the dropdown.           |
+| `--tagarea-dropdown-font-family`                      | `sans-serif`                    | The font family of the dropdown.              |
+| `--tagarea-dropdown-font-size`                        | `1rem`                          | The font size of the dropdown.                |
+| `--tagarea-dropdown-color`                            | `#000`                          | The text color of the dropdown.               |
+| `--tagarea-dropdown-option-padding`                   | `8px`                           | The padding of the dropdown options.          |
+| `--tagarea-dropdown-option-color`                     | `inherit`                       | The text color of the dropdown options.       |
+| `--tagarea-dropdown-option-background-color`          | `#fff`                          | The background color of the dropdown options. |
+| `--tagarea-dropdown-option-hover-background-color`    | `#f0f4ff`                       | The background color of hovered options.      |
+| `--tagarea-dropdown-option-hover-color`               | `inherit`                       | The text color of hovered options.            |
+| `--tagarea-dropdown-option-selected-background-color` | `#e0e8ff`                       | The background color of selected options.     |
+| `--tagarea-dropdown-option-selected-color`            | `inherit`                       | The text color of selected options.           |
+| `--tagarea-dropdown-option-loading-color`             | `#888`                          | The text color of the loading indicator.      |
+| `--tagarea-dropdown-option-error-color`               | `#c00`                          | The text color of the error message.          |
+| `--tagarea-dropdown-option-empty-color`               | `#888`                          | The text color of the "no results" message.   |
+
 ## API Reference
 
 ### `new TagArea(options)`

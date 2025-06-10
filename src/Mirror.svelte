@@ -9,7 +9,22 @@
 		knownWords,
 		markerRect = $bindable(),
 		formatTag = (tag: string) =>
-			`<span style="text-decoration:underline;">${tag}</span>`
+			`<span style="${[
+				"color:var(--tagarea-tag-color, inherit)",
+				"background-color:var(--tagarea-tag-background-color, inherit)",
+				"font-weight:var(--tagarea-tag-font-weight, inherit)",
+				"font-style:var(--tagarea-tag-font-style, inherit)",
+				"font-size:var(--tagarea-tag-font-size, inherit)",
+				"font-family:var(--tagarea-tag-font-family, inherit)",
+				"text-transform:var(--tagarea-tag-text-transform, inherit)",
+				"text-align:var(--tagarea-tag-text-align, inherit)",
+				"text-decoration-line:var(--tagarea-tag-text-decoration-line, underline)",
+				"text-decoration-color:var(--tagarea-tag-text-decoration-color, inherit)",
+				"text-decoration-style:var(--tagarea-tag-text-decoration-style, inherit)",
+				"text-decoration-thickness:var(--tagarea-tag-text-decoration-thickness, inherit)",
+				"border:var(--tagarea-tag-border, inherit)",
+				"border-radius:var(--tagarea-tag-border-radius, 0)"
+			].join(";")};">${tag}</span>`
 	}: {
 		value: string;
 		source: HTMLInputElement | HTMLTextAreaElement;
@@ -109,6 +124,7 @@
 	}
 </script>
 
+<svelte:window onresize={updatePosition} />
 <div style={styleString}>
 	{#if currentWord}
 		{@const before = markup(value.substring(0, currentWord.start))}
