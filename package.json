@@ -1,0 +1,25 @@
+{
+	"name": "tagarea",
+	"module": "index.ts",
+	"type": "module",
+	"author": "Nicket",
+	"license": "MIT",
+	"private": true,
+	"scripts": {
+		"build": "bun scripts/build.ts"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"@tsconfig/svelte": "^5.0.4",
+		"@types/bun": "^1.2.15",
+		"esbuild": "^0.25.5",
+		"esbuild-svelte": "^0.9.3",
+		"html-entities": "^2.6.0",
+		"just-debounce-it": "^3.2.0",
+		"svelte": "^5.33.14",
+		"svelte-check": "^4.2.1",
+		"svelte-preprocess": "^6.0.3"
+	}
+}

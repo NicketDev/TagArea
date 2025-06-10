@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>TagArea</title>
+	</head>
+	<body style="margin: 0; padding: 0">
+		<div
+			style="
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				width: 100vw;
+				height: 100vh;
+			"
+		>
+			<h1>Test textarea</h1>
+			<textarea
+				id="input"
+				style="
+					width: 800px;
+					height: 400px;
+					max-width: 80%;
+					max-height: 80%;
+					font-size: 16px;
+					padding: 10px;
+				"
+			></textarea>
+		</div>
+		<script type="module">
+			import { TagArea } from "../dist/index.esm.js";
+
+			const names = [
+				"Aaron",
+				"Abigail",
+				"Adam",
+				"Alice",
+				"Amelia",
+				"Benjamin",
+				"Bella",
+				"Blake",
+				"Brianna",
+				"Brody",
+				"Caleb",
+				"Charlotte",
+				"Chloe",
+				"Christian",
+				"Claire",
+				"Daniel",
+				"David",
+				"Delilah",
+				"Dylan",
+				"Daisy",
+				"Elijah",
+				"Emma",
+				"Ethan",
+				"Evelyn",
+				"Ezra",
+				"Finn",
+				"Fiona",
+				"Faith",
+				"Felix",
+				"Freya",
+				"Gabriel",
+				"Grace",
+				"Gavin",
+				"Gianna",
+				"George",
+				"Hannah",
+				"Henry",
+				"Harper",
+				"Hazel",
+				"Hudson",
+				"Isaac",
+				"Isabella",
+				"Ian",
+				"Ivy",
+				"Isaiah",
+				"Jacob",
+				"Julia",
+				"Jackson",
+				"Josephine",
+				"James",
+				"Katherine",
+				"Kai",
+				"Kingston",
+				"Kayla",
+				"Kevin",
+				"Liam",
+				"Lily",
+				"Lucas",
+				"Layla",
+				"Logan",
+				"Mason",
+				"Mia",
+				"Michael",
+				"Madison",
+				"Matthew",
+				"Noah",
+				"Natalie",
+				"Nathan",
+				"Nora",
+				"Nicholas",
+				"Oliver",
+				"Olivia",
+				"Owen",
+				"Opal",
+				"Oscar",
+				"Parker",
+				"Penelope",
+				"Patrick",
+				"Paige",
+				"Peyton",
+				"Quentin",
+				"Quinn",
+				"Queenie",
+				"Quincy",
+				"Quinton",
+				"Ryan",
+				"Rachel",
+				"Riley",
+				"Rose",
+				"Robert",
+				"Samuel",
+				"Sophia",
+				"Scarlett",
+				"Sebastian",
+				"Sarah",
+				"Theodore",
+				"Taylor",
+				"Thomas",
+				"Tessa",
+				"Tristan",
+				"Uma",
+				"Uriah",
+				"Unity",
+				"Ulysses",
+				"Una",
+				"Victor",
+				"Violet",
+				"Vincent",
+				"Victoria",
+				"Vivian",
+				"William",
+				"Willow",
+				"Wyatt",
+				"Wendy",
+				"Wesley",
+				"Xavier",
+				"Xena",
+				"Xander",
+				"Ximena",
+				"Xavi",
+				"Yvonne",
+				"Yara",
+				"Yusuf",
+				"Yasmin",
+				"Yael",
+				"Zachary",
+				"Zoe",
+				"Zane",
+				"Zaria",
+				"Zion"
+			];
+
+			const tagArea = new TagArea({
+				input: document.getElementById("input"),
+				data: {
+					fetch: async (search) => {
+						const timeout = Math.floor(Math.random() * 3000);
+						await new Promise((resolve) => setTimeout(resolve, timeout));
+						return names
+							.filter((name) =>
+								name.toLowerCase().startsWith(search.toLowerCase())
+							)
+							.slice(0, 25);
+					},
+					pageSize: 25
+				},
+				formatTag: (tag) => {
+					return `<span style="color:blue;text-decoration:underline;">${tag}</span>`;
+				}
+			});
+		</script>
+	</body>
+</html>
